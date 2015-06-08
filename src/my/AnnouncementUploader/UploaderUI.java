@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 
 public class UploaderUI extends javax.swing.JFrame {
@@ -137,6 +138,8 @@ public class UploaderUI extends javax.swing.JFrame {
                 e.printStackTrace();
             }
         }
+        JOptionPane.showMessageDialog(rootPane, "Uploaded to: " + System.getProperty("user.home") + "\\Desktop", "Success!", JOptionPane.INFORMATION_MESSAGE);
+        System.exit(0);
     }//GEN-LAST:event_btn_generateActionPerformed
 
     private void txt_announcementMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_announcementMouseClicked
