@@ -9,17 +9,21 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import org.apache.commons.io.FileUtils;
 
 
 public class UploaderUI extends javax.swing.JFrame {
-
+    private Writer writer = null;
     private List< String > announceList = new ArrayList<>();
     private int num = 1;
     
+    private String userHomeFolder = System.getProperty("user.home");
+    private File file = new File(userHomeFolder + "/Desktop", "Announcements.xml");
     /**
      * Creates new form UploaderUI
      */
@@ -106,24 +110,19 @@ public class UploaderUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_generateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_generateActionPerformed
-        Writer writer = null;
+        
  
         try {
-            String text = "This is a text file";
-            String userHomeFolder = System.getProperty("user.home");
-            File file = new File(userHomeFolder + "/Desktop", "Announcements.xml");
+           
+            
             
             if(opt_append.isSelected()){
-                writer = new BufferedWriter(new java.io.FileWriter(file, true));
+                writeAppend();
             }else{
-                writer = new BufferedWriter(new java.io.FileWriter(file, false));
+                writeNew();    
             }
             
-            writer.write("\n<date>" + getDate() + "</date>");
-            for (int i = 0; i < announceList.size(); i++){
-                writer.write("\n<announcement>" + announceList.get(i) + "</announcement>");
-              
-            }
+            
             
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -135,7 +134,7 @@ public class UploaderUI extends javax.swing.JFrame {
                     writer.close();
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                
             }
         }
         JOptionPane.showMessageDialog(rootPane, "Uploaded to: " + System.getProperty("user.home") + "\\Desktop", "Success!", JOptionPane.INFORMATION_MESSAGE);
@@ -143,7 +142,7 @@ public class UploaderUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_generateActionPerformed
 
     private void txt_announcementMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_announcementMouseClicked
-        //
+        //DELTE ME
     }//GEN-LAST:event_txt_announcementMouseClicked
 
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
@@ -154,12 +153,10 @@ public class UploaderUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_addActionPerformed
 
     private void cmb_dayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmb_dayActionPerformed
-        // TODO add your handling code here:
+        //DELETE ME
     }//GEN-LAST:event_cmb_dayActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -199,6 +196,35 @@ public class UploaderUI extends javax.swing.JFrame {
         
         return month + " " + day + ", " + year;
     }
+    
+    public void writeAppend() throws IOException{
+        if (file.isFile() == true){
+            //file is the path where we're writing
+            String fileString = FileUtils.readFileToString(file);
+            System.out.println(fileString);
+            //the boolean in the below line indicates if we should append or not
+            writer = new BufferedWriter(new java.io.FileWriter(file, false));
+
+            writer.write("\n<date>" + getDate() + "</date>");
+            for (String announceList1 : announceList) {
+                writer.write("\n<announcement>" + announceList1 + "</announcement>");
+            }
+            writer.write(fileString);
+        }else{
+            writeNew();
+        }
+        
+    }
+    
+    public void writeNew() throws IOException{
+        writer = new BufferedWriter(new java.io.FileWriter(file, false));
+        writer.write("\n<date>" + getDate() + "</date>");
+        for (String announceList1 : announceList) {
+            writer.write("\n<announcement>" + announceList1 + "</announcement>");
+        }
+    }
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_add;
