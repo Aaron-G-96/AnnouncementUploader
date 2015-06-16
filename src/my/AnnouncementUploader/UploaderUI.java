@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import javax.swing.JOptionPane;
 import org.apache.commons.io.FileUtils;
@@ -51,6 +52,7 @@ public class UploaderUI extends javax.swing.JFrame {
         opt_append = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(750, 900));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btn_generate.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -74,6 +76,7 @@ public class UploaderUI extends javax.swing.JFrame {
         txt_announcement.setColumns(20);
         txt_announcement.setLineWrap(true);
         txt_announcement.setRows(5);
+        txt_announcement.setWrapStyleWord(true);
         txt_announcement.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 txt_announcementMouseClicked(evt);
@@ -89,12 +92,39 @@ public class UploaderUI extends javax.swing.JFrame {
 
         cmb_month.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" }));
         cmb_month.setToolTipText("");
+        Calendar cal = Calendar.getInstance();
+        cmb_month.setSelectedIndex(cal.get(Calendar.MONTH));
         getContentPane().add(cmb_month, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 140, -1));
 
         cmb_year.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "2015", "2016", "2017", "2018", "2019", "2020" }));
+        int year = cal.get(Calendar.YEAR);
+        switch (year){
+            case 2015:
+            cmb_year.setSelectedIndex(0);
+            break;
+            case 2016:
+            cmb_year.setSelectedIndex(1);
+            break;
+            case 2017:
+            cmb_year.setSelectedIndex(2);
+            break;
+            case 2018:
+            cmb_year.setSelectedIndex(3);
+            break;
+            case 2019:
+            cmb_year.setSelectedIndex(4);
+            break;
+            case 2020:
+            cmb_year.setSelectedIndex(5);
+            break;
+            default:
+            cmb_year.setSelectedIndex(0);
+            break;
+        }
         getContentPane().add(cmb_year, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 70, 110, -1));
 
         cmb_day.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
+        cmb_day.setSelectedIndex(cal.get(Calendar.DATE) -1);
         cmb_day.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmb_dayActionPerformed(evt);
@@ -142,7 +172,9 @@ public class UploaderUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_generateActionPerformed
 
     private void txt_announcementMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_announcementMouseClicked
-        //DELTE ME
+        Calendar cal = Calendar.getInstance();
+        String month = String.valueOf(cal.get(Calendar.YEAR));
+        JOptionPane.showMessageDialog(rootPane,  month,  "BLAH BLAH", JOptionPane.INFORMATION_MESSAGE );
     }//GEN-LAST:event_txt_announcementMouseClicked
 
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
@@ -193,6 +225,7 @@ public class UploaderUI extends javax.swing.JFrame {
         String month = String.valueOf(cmb_month.getSelectedItem());
         String day = String.valueOf(cmb_day.getSelectedItem());
         String year = String.valueOf(cmb_year.getSelectedItem());
+        
         
         return month + " " + day + ", " + year;
     }
