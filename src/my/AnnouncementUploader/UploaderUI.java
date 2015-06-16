@@ -172,9 +172,7 @@ public class UploaderUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_generateActionPerformed
 
     private void txt_announcementMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_announcementMouseClicked
-        Calendar cal = Calendar.getInstance();
-        String month = String.valueOf(cal.get(Calendar.YEAR));
-        JOptionPane.showMessageDialog(rootPane,  month,  "BLAH BLAH", JOptionPane.INFORMATION_MESSAGE );
+        //Delete Me
     }//GEN-LAST:event_txt_announcementMouseClicked
 
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
@@ -237,11 +235,12 @@ public class UploaderUI extends javax.swing.JFrame {
             System.out.println(fileString);
             //the boolean in the below line indicates if we should append or not
             writer = new BufferedWriter(new java.io.FileWriter(file, false));
-
+            //writer.write("\n<group>");
             writer.write("\n<date>" + getDate() + "</date>");
             for (String announceList1 : announceList) {
                 writer.write("\n<announcement>" + announceList1 + "</announcement>");
             }
+            //writer.write("\n</group>");
             writer.write(fileString);
         }else{
             writeNew();
@@ -251,10 +250,12 @@ public class UploaderUI extends javax.swing.JFrame {
     
     public void writeNew() throws IOException{
         writer = new BufferedWriter(new java.io.FileWriter(file, false));
+        //writer.write("\n<group>");
         writer.write("\n<date>" + getDate() + "</date>");
         for (String announceList1 : announceList) {
             writer.write("\n<announcement>" + announceList1 + "</announcement>");
         }
+        //writer.write("\n</group>");
     }
     
     
