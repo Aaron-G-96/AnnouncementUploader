@@ -34,6 +34,7 @@ public class UploaderUI extends javax.swing.JFrame {
      */
     public UploaderUI() {
         initComponents();
+        
     }
 
     /**
@@ -56,6 +57,7 @@ public class UploaderUI extends javax.swing.JFrame {
         chk_append = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setTitle("Announcement Uploader");
         setPreferredSize(new java.awt.Dimension(750, 900));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -85,6 +87,7 @@ public class UploaderUI extends javax.swing.JFrame {
         txt_announcement.setColumns(20);
         txt_announcement.setLineWrap(true);
         txt_announcement.setRows(5);
+        txt_announcement.setToolTipText("Only one announcement should be added at a time. ");
         txt_announcement.setWrapStyleWord(true);
         txt_announcement.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -180,13 +183,14 @@ public class UploaderUI extends javax.swing.JFrame {
             }
         }
         JOptionPane.showMessageDialog(rootPane, "Uploaded to: " + System.getProperty("user.home") + "\\Desktop", "Success!", JOptionPane.INFORMATION_MESSAGE);
-        Desktop desktop = Desktop.getDesktop();
+        /*
         try {
             Runtime.getRuntime().exec("explorer.exe /select," + file);
             //openWebpage("http://forums.netbeans.org/topic27075.html");        
         } catch (IOException ex) {
             Logger.getLogger(UploaderUI.class.getName()).log(Level.SEVERE, null, ex);
         }
+        */
         System.exit(0);
     }//GEN-LAST:event_btn_generateActionPerformed
 
