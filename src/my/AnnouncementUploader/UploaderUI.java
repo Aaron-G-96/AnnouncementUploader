@@ -5,15 +5,19 @@
  */
 package my.AnnouncementUploader;
 
+import java.awt.Desktop;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.io.Writer;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.apache.commons.io.FileUtils;
 
@@ -176,6 +180,13 @@ public class UploaderUI extends javax.swing.JFrame {
             }
         }
         JOptionPane.showMessageDialog(rootPane, "Uploaded to: " + System.getProperty("user.home") + "\\Desktop", "Success!", JOptionPane.INFORMATION_MESSAGE);
+        Desktop desktop = Desktop.getDesktop();
+        try {
+            Runtime.getRuntime().exec("explorer.exe /select," + file);
+            //openWebpage("http://forums.netbeans.org/topic27075.html");        
+        } catch (IOException ex) {
+            Logger.getLogger(UploaderUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         System.exit(0);
     }//GEN-LAST:event_btn_generateActionPerformed
 
@@ -273,6 +284,18 @@ public class UploaderUI extends javax.swing.JFrame {
         }
         writer.write("\n</group>");
     }
+    
+    
+
+public static void openWebpage(String urlString) {
+    try {
+        Desktop.getDesktop().browse(new URL(urlString).toURI());
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+
+
     
     
 
