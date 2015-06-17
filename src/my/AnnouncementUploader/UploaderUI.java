@@ -49,13 +49,18 @@ public class UploaderUI extends javax.swing.JFrame {
         cmb_month = new javax.swing.JComboBox();
         cmb_year = new javax.swing.JComboBox();
         cmb_day = new javax.swing.JComboBox();
-        opt_append = new javax.swing.JRadioButton();
+        chk_append = new javax.swing.JCheckBox();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(750, 900));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                onExit(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btn_generate.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btn_generate.setFont(btn_generate.getFont().deriveFont(btn_generate.getFont().getSize()+5f));
         btn_generate.setText("Generate File");
         btn_generate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -64,7 +69,7 @@ public class UploaderUI extends javax.swing.JFrame {
         });
         getContentPane().add(btn_generate, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 680, 150, 40));
 
-        btn_add.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btn_add.setFont(btn_add.getFont().deriveFont(btn_add.getFont().getSize()+5f));
         btn_add.setText("Add Announcement");
         btn_add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -86,16 +91,18 @@ public class UploaderUI extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, 590, 380));
 
-        lbl_announceNum.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lbl_announceNum.setFont(lbl_announceNum.getFont().deriveFont(lbl_announceNum.getFont().getSize()+5f));
         lbl_announceNum.setText("Enter Announcement 1:");
         getContentPane().add(lbl_announceNum, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 130, -1, -1));
 
+        cmb_month.setFont(cmb_month.getFont());
         cmb_month.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" }));
         cmb_month.setToolTipText("");
         Calendar cal = Calendar.getInstance();
         cmb_month.setSelectedIndex(cal.get(Calendar.MONTH));
         getContentPane().add(cmb_month, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 140, -1));
 
+        cmb_year.setFont(cmb_year.getFont());
         cmb_year.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "2015", "2016", "2017", "2018", "2019", "2020" }));
         int year = cal.get(Calendar.YEAR);
         switch (year){
@@ -123,6 +130,7 @@ public class UploaderUI extends javax.swing.JFrame {
         }
         getContentPane().add(cmb_year, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 70, 110, -1));
 
+        cmb_day.setFont(cmb_day.getFont());
         cmb_day.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
         cmb_day.setSelectedIndex(cal.get(Calendar.DATE) -1);
         cmb_day.addActionListener(new java.awt.event.ActionListener() {
@@ -132,9 +140,9 @@ public class UploaderUI extends javax.swing.JFrame {
         });
         getContentPane().add(cmb_day, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 70, 110, -1));
 
-        opt_append.setSelected(true);
-        opt_append.setText("Add to Existing");
-        getContentPane().add(opt_append, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 750, -1, -1));
+        chk_append.setSelected(true);
+        chk_append.setText("Append to existing");
+        getContentPane().add(chk_append, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 750, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -146,7 +154,7 @@ public class UploaderUI extends javax.swing.JFrame {
            
             
             
-            if(opt_append.isSelected()){
+            if(chk_append.isSelected()){
                 writeAppend();
             }else{
                 writeNew();    
@@ -186,16 +194,24 @@ public class UploaderUI extends javax.swing.JFrame {
         //DELETE ME
     }//GEN-LAST:event_cmb_dayActionPerformed
 
+    private void onExit(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_onExit
+        int confirm = JOptionPane.showOptionDialog(
+             null, "Close Application without generating a file?", 
+             "Exit Confirmation", JOptionPane.YES_NO_OPTION, 
+             JOptionPane.WARNING_MESSAGE, null, null, null);
+        if (confirm == 0) {
+           System.exit(0);
+        }
+    }//GEN-LAST:event_onExit
+
 
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
+        /* Set the Windows look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+        
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -235,12 +251,12 @@ public class UploaderUI extends javax.swing.JFrame {
             System.out.println(fileString);
             //the boolean in the below line indicates if we should append or not
             writer = new BufferedWriter(new java.io.FileWriter(file, false));
-            //writer.write("\n<group>");
+            writer.write("\n<group>");
             writer.write("\n<date>" + getDate() + "</date>");
             for (String announceList1 : announceList) {
                 writer.write("\n<announcement>" + announceList1 + "</announcement>");
             }
-            //writer.write("\n</group>");
+            writer.write("\n</group>");
             writer.write(fileString);
         }else{
             writeNew();
@@ -250,12 +266,12 @@ public class UploaderUI extends javax.swing.JFrame {
     
     public void writeNew() throws IOException{
         writer = new BufferedWriter(new java.io.FileWriter(file, false));
-        //writer.write("\n<group>");
+        writer.write("\n<group>");
         writer.write("\n<date>" + getDate() + "</date>");
         for (String announceList1 : announceList) {
             writer.write("\n<announcement>" + announceList1 + "</announcement>");
         }
-        //writer.write("\n</group>");
+        writer.write("\n</group>");
     }
     
     
@@ -263,12 +279,12 @@ public class UploaderUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_add;
     private javax.swing.JButton btn_generate;
+    private javax.swing.JCheckBox chk_append;
     private javax.swing.JComboBox cmb_day;
     private javax.swing.JComboBox cmb_month;
     private javax.swing.JComboBox cmb_year;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbl_announceNum;
-    private javax.swing.JRadioButton opt_append;
     private javax.swing.JTextArea txt_announcement;
     // End of variables declaration//GEN-END:variables
 }
